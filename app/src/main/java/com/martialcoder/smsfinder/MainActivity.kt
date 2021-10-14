@@ -35,32 +35,27 @@ class MainActivity : AppCompatActivity() , InterfacePresenter.View {
                         binding.daysCount.text.toString()
                     )
                 } else {
-                    showToast("SMS PErmisssion")
+                    showToast(getString(R.string.permission_error))
                     return@registerForActivityResult
                 }
             }
 
         binding.mobileNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.daysCount.isVisible)
-                    binding.daysCount.visibility = View.GONE
+                if (binding.tvCount.isVisible)
+                    binding.tvCount.visibility = View.GONE
             }
-
             override fun afterTextChanged(p0: Editable?) {
-
             }
-
         })
         binding.daysCount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.daysCount.isVisible)
-                    binding.daysCount.visibility = View.GONE
+                if (binding.tvCount.isVisible)
+                    binding.tvCount.visibility = View.GONE
             }
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -105,14 +100,14 @@ class MainActivity : AppCompatActivity() , InterfacePresenter.View {
     }
 
     override fun Sucess(message: String) {
-        binding.daysCount.visibility = View.VISIBLE
-        binding.daysCount.text= message
-        binding.daysCount.setTextColor(getColor(R.color.success))
+        binding.tvCount.visibility = View.VISIBLE
+        binding.tvCount.text= message
+        binding.tvCount.setTextColor(getColor(R.color.success))
     }
 
     override fun Failure(message: String) {
-        binding.daysCount.visibility =  View.VISIBLE
-        binding.daysCount.text = message
-        binding.daysCount.setTextColor(getColor(R.color.error))
+        binding.tvCount.visibility =  View.VISIBLE
+        binding.tvCount.text = message
+        binding.tvCount.setTextColor(getColor(R.color.error))
     }
 }

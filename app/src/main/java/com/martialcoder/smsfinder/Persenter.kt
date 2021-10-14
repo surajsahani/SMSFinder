@@ -26,21 +26,21 @@ class Persenter(private val mContext:Context, private val view:InterfacePresente
     override fun fetch(number: String?, day: String?) {
         when {
             Empty(number) -> {
-                view.Mobile("Please Mobile")
+                view.Mobile(mContext.getString(R.string.error_empty_number))
                 return
             }
             Validate(number) -> {
-                view.invalid("Please enter valid")
+                view.invalid(mContext.getString(R.string.error_invalid_number))
                 return
             }
-            Days(day = null) -> {
-                view.Days("number of days")
+            Days(day) -> {
+                view.Days(mContext.getString(R.string.error_empty_day))
                 return
             }
             else -> {
                 var count = 0
                 val filter =
-                    arrayOf("+91" + number!!.trim(), Date(day)!!.time.toString().toString().trim())
+                    arrayOf("+91" + number!!.trim(), startDate(day)!!.time.toString().trim())
                 val inboxURI: Uri = Uri.parse("content://sms")
                 val cursor: Cursor? = mContext.contentResolver.query(
                     inboxURI,
@@ -54,9 +54,9 @@ class Persenter(private val mContext:Context, private val view:InterfacePresente
                 }
                 cursor.close()
                 if (count > 0)
-                    view.Sucess("$count" + "total messages")
+                    view.Sucess("$count" + mContext.getString(R.string.sms_found))
                 else
-                    view.Failure("No messages")
+                    view.Failure(mContext.getString(R.string.no_sms_found))
             }
         }
     }

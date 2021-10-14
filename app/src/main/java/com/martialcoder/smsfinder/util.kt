@@ -1,6 +1,5 @@
 package com.martialcoder.smsfinder
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.MotionEvent
 import android.view.View
@@ -10,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.lang.Exception
 
 fun Context.showToast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
@@ -24,7 +22,7 @@ fun Context.showLongToast(text: CharSequence) {
 
 fun UI(view: View, context: Context) {
     if (view !is EditText) {
-        view.setOnTouchListener { view, motionEvent ->
+        view.setOnTouchListener { _: View?, _: MotionEvent? ->
             hide(context)
             false
         }
