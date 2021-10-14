@@ -7,34 +7,35 @@ import android.provider.Telephony
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Persenter(private val mContext:Context, private val view:InterfacePresenter.View): InterfacePresenter {
-    override fun Empty(number: String?): Boolean {
+class Persenter(private val mContext:Context, private val view: Interface.View):
+    Interface {
+    override fun empty(number: String?): Boolean {
         return number.isNullOrBlank()
     }
 
-    override fun Validate(number: String?): Boolean {
+    override fun validate(number: String?): Boolean {
         if(number!!.length < 10) {
             return true
         }
         return false
     }
 
-    override fun Days(day: String?): Boolean {
+    override fun days(day: String?): Boolean {
         return day.isNullOrBlank()
     }
 
     override fun fetch(number: String?, day: String?) {
         when {
-            Empty(number) -> {
-                view.Mobile(mContext.getString(R.string.error_empty_number))
+            empty(number) -> {
+                view.mobile(mContext.getString(R.string.error_empty_number))
                 return
             }
-            Validate(number) -> {
+            validate(number) -> {
                 view.invalid(mContext.getString(R.string.error_invalid_number))
                 return
             }
-            Days(day) -> {
-                view.Days(mContext.getString(R.string.error_empty_day))
+            days(day) -> {
+                view.emptyDays(mContext.getString(R.string.error_empty_day))
                 return
             }
             else -> {
@@ -44,8 +45,8 @@ class Persenter(private val mContext:Context, private val view:InterfacePresente
                 val inboxURI: Uri = Uri.parse("content://sms")
                 val cursor: Cursor? = mContext.contentResolver.query(
                     inboxURI,
-                    arrayOf("_id", "thread_id","address", "date", "body", "type"),
-                    Telephony.Sms.ADDRESS +"=? AND" + Telephony.Sms.DATE + ">=?",
+                    arrayOf("_id", "thread_id","address","person", "date", "body", "type"),
+                    Telephony.Sms.ADDRESS + "=? AND " + Telephony.Sms.DATE + ">=?",
                     filter,
                     null
                 )
@@ -54,9 +55,9 @@ class Persenter(private val mContext:Context, private val view:InterfacePresente
                 }
                 cursor.close()
                 if (count > 0)
-                    view.Sucess("$count" + mContext.getString(R.string.sms_found))
+                    view.sucess("$count " + mContext.getString(R.string.sms_found))
                 else
-                    view.Failure(mContext.getString(R.string.no_sms_found))
+                    view.failure(mContext.getString(R.string.no_sms_found))
             }
         }
     }

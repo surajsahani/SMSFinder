@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.martialcoder.smsfinder.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() , InterfacePresenter.View {
+class MainActivity : AppCompatActivity() , Interface.View {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var PermissionLauncher: ActivityResultLauncher<String>
@@ -87,11 +87,11 @@ class MainActivity : AppCompatActivity() , InterfacePresenter.View {
     }
 
 
-    override fun Mobile(message: String) {
+    override fun mobile(message: String) {
         showLongToast(message)
     }
 
-    override fun Days(message: String) {
+    override fun emptyDays(message: String) {
         showToast(message)
     }
 
@@ -99,13 +99,13 @@ class MainActivity : AppCompatActivity() , InterfacePresenter.View {
         showToast(message)
     }
 
-    override fun Sucess(message: String) {
+    override fun sucess(message: String) {
         binding.tvCount.visibility = View.VISIBLE
         binding.tvCount.text= message
         binding.tvCount.setTextColor(getColor(R.color.success))
     }
 
-    override fun Failure(message: String) {
+    override fun failure(message: String) {
         binding.tvCount.visibility =  View.VISIBLE
         binding.tvCount.text = message
         binding.tvCount.setTextColor(getColor(R.color.error))
